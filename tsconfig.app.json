@@ -9,13 +9,14 @@
 			"DOM.Iterable"
 		],
 		"types": [
-			"@testing-library/jest-dom"
+			"@testing-library/jest-dom",
+			"node"
 		],
 		"module": "ESNext",
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		/* Bundler mode */
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"isolatedModules": true,
 		"moduleDetection": "force",
@@ -25,7 +26,13 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		}
 	},
 	"include": [
 		"src/client/**/*",

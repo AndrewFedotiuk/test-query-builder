@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
 import "vitest/config";
 import react from "@vitejs/plugin-react-swc";
+import path from "path";
+import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
-	plugins: [react()],
+	plugins: [react(), tailwindcss()],
 	server: {
 		proxy: {
 			"/api": {
@@ -16,5 +18,10 @@ export default defineConfig({
 		environment: "jsdom",
 		globals: true,
 		setupFiles: "./vite.setup.ts",
+	},
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "src"),
+		},
 	},
 });

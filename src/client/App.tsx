@@ -1,27 +1,13 @@
-import axios from "axios";
+import { MainForm } from "./features/MainForm/MainForm"
 
 function App() {
-	const handleClick = async () => {
-		try {
-			await axios.post("/api/save-rules", {});
-			alert("Submitted");
-		} catch {
-			alert("Error");
-		}
-	};
 
 	return (
-		<div>
-			<h1>Query Builder</h1>
-			<form>
-				<button type="button" onClick={handleClick}>
-					Submit
-				</button>
-				<button type="button" onClick={handleClick}>
-					Cancel
-				</button>
-			</form>
-		</div>
+		<main className="grid gap-6 items-center justify-center p-6">
+			<h1 className="text-center text-3xl font-bold">Query Builder</h1>
+
+			<MainForm />
+		</main>
 	);
 }
 
