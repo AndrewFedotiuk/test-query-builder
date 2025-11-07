@@ -1,8 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { EFieldName, EOperation } from "./_type";
 import { CardHeader } from "../CardHeader";
-import { Button } from "@/components/ui/button";
+import {ECombinator, TRule, TRuleGroup} from "@/client/features/MainForm/_types.ts";
 
 const fieldOptions = [
 	{
@@ -42,32 +40,88 @@ const operationOptions = [
 	}
 ];
 
-export function CardFieldGroup() {
+type TCardFieldGroupProps = {
+	group: TRuleGroup;
+	groupChange: (group: TRuleGroup)=> void
+}
+
+export function CardFieldGroup({
+	group,
+	groupChange
+}:TCardFieldGroupProps) {
+	const updateCombinator = (combinator: ECombinator) => {
+		groupChange({ ...group, combinator });
+	};
+
+	const addRule = () => {
+		const newRule: TRule = {
+			id: `rule-${Date.now()}-${Math.random()}`,
+			fieldName: "",
+			operation: EOperation.EQUAL,
+			value: ""
+		};
+		groupChange({...group, rules: [...group.rules, newRule]});
+	};
+
+	const addGroup = () => {
+		const newGroup: TRuleGroup = {
+			id: `group-${Date.now()}-${Math.random()}`,
+			combinator: ECombinator.AND,
+			rules: [],
+			subGroups: []
+		};
+		groupChange({...group, subGroups: [...group.subGroups, newGroup]});
+	};
+
+	const updateRule = (index: number, rule: TRule) => {
+		const newRules = [...group.rules];
+		newRules[index] = rule;
+		groupChange({ ...group, rules: newRules });
+	};
+
+	const deleteRule = (index: number) => {
+		groupChange({ ...group, rules: group.rules.filter((_, i) => i !== index) });
+	};
+
+	const updateSubGroup = (index: number, subGroup: TRuleGroup) => {
+		const newSubGroups = [...group.subGroups];
+		newSubGroups[index] = subGroup;
+		groupChange({ ...group, subGroups: newSubGroups });
+	};
+
+	const deleteSubGroup = (index: number) => {
+		groupChange({ ...group, subGroups: group.subGroups.filter((_, i) => i !== index) });
+	};
+
+
 	return (
 		<div className="grid gap-3 p-3 rounded-md border">
-			<CardHeader />
+			<CardHeader
+				combinator={group.combinator}
+				onCombinatorChange={updateCombinator}
+				onAddRuleClick={addRule}
+				onAddGroupClick={addGroup}
+			/>
 
-			<div className="flex gap-3">
-				<NativeSelect>
-					{fieldOptions.map((option) => (
-						<NativeSelectOption key={option.value} value={option.value}>
-							{option.label}
-						</NativeSelectOption>
-					))}
-				</NativeSelect>
+			{/*{*/}
+			{/*	group.rules.map((rule, idx) => (*/}
+			{/*		<RuleComponent*/}
+			{/*			key={rule.id}*/}
+			{/*			rule={rule}*/}
+			{/*			onChange={(r) => updateRule(idx, r)}*/}
+			{/*			onDelete={() => deleteRule(idx)}*/}
+			{/*			error={errors[rule.id]}*/}
+			{/*		/>*/}
+			{/*	))}*/}
 
-				<NativeSelect>
-					{operationOptions.map((option) => (
-						<NativeSelectOption key={option.value} value={option.value}>
-							{option.label}
-						</NativeSelectOption>
-					))}
-				</NativeSelect>
-			
-				<Input className="flex-1" type="text" placeholder="Operator" />
-
-				<Button variant="destructive" size="icon">-</Button>
-			</div>
+			{
+				group.subGroups.map((subGroup, idx) => (
+					<CardFieldGroup
+						key={subGroup.id}
+						group={subGroup}
+						groupChange={(groupd: TRuleGroup) => updateSubGroup(idx, groupd)}
+					/>
+				))}
 		</div>
 	)
 };

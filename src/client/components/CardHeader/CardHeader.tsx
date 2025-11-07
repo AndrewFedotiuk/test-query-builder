@@ -3,23 +3,41 @@ import {
 	NativeSelectOption,
 } from "@/components/ui/native-select";
 import { Button } from "@/components/ui/button";
-import { EQueryType } from "./_types";
+import {ECombinator} from "@/client/features/MainForm/_types.ts";
 
 const combinatorOptions = [
 	{
-		value: EQueryType.AND,
+		value: ECombinator.AND,
 		label: "And",
 	},
 	{
-		value: EQueryType.OR,
+		value: ECombinator.OR,
 		label: "Or",
 	},
 ];
 
-export function CardHeader() {
+type TCardHeaderProps = {
+	combinator: ECombinator;
+	onCombinatorChange: (combinator: ECombinator) => void;
+	onAddGroupClick: ()=> void;
+	onAddRuleClick: ()=> void;
+	onDeleteClick?: () => void;
+}
+
+export function CardHeader({
+	combinator,
+	onCombinatorChange,
+
+	onAddRuleClick,
+	onAddGroupClick,
+	onDeleteClick
+}: TCardHeaderProps) {
 	return (
-		<header className="flex gap-3">
-			<NativeSelect>
+		<header className="flex gap-3 justify-between flex-wrap">
+			<NativeSelect
+				value={combinator}
+				onChange={(e) => onCombinatorChange(e.target.value as ECombinator)}
+			>
 				{combinatorOptions.map((option) => (
 					<NativeSelectOption key={option.value} value={option.value}>
 						{option.label}
@@ -27,8 +45,16 @@ export function CardHeader() {
 				))}
 			</NativeSelect>
 
-			<Button type="button" className="flex-1">+ Add Rule</Button>
-			<Button type="button" className="flex-1">+ Add Group</Button>
+			<div className="flex gap-3">
+				<Button type="button" variant="ghost" onClick={onAddRuleClick}>+ Add Rule</Button>
+				<Button type="button" variant="ghost" onClick={onAddGroupClick}>+ Add Group</Button>
+				{
+					onDeleteClick
+						? (
+							<Button onClick={onDeleteClick} type="button" variant="destructive" size="icon">-</Button>)
+						: null
+				}
+			</div>
 		</header>
 	)
 };
