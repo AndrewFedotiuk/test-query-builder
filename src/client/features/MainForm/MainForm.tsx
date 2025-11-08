@@ -1,9 +1,8 @@
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { CardFieldGroup } from "@/client/components/CardFieldGroup";
-import {ECombinator, TRuleGroup} from "@/client/features/MainForm/_types.ts";
-import {useState} from "react";
-
+import { ECombinator, TRuleGroup } from "@/client/features/MainForm/_types.ts";
+import { useState } from "react";
 
 export function MainForm() {
 	const [rootGroup, setRootGroup] = useState<TRuleGroup>({

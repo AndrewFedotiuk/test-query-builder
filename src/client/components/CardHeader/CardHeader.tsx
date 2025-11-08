@@ -3,7 +3,7 @@ import {
 	NativeSelectOption,
 } from "@/components/ui/native-select";
 import { Button } from "@/components/ui/button";
-import {ECombinator} from "@/client/features/MainForm/_types.ts";
+import { ECombinator } from "@/client/features/MainForm/_types.ts";
 
 const combinatorOptions = [
 	{

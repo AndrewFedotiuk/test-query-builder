@@ -1,53 +1,17 @@
-import { EFieldName, EOperation } from "./_type";
+import { EFieldName, EOperation } from "@/client/features/MainForm/_types";
 import { CardHeader } from "../CardHeader";
-import {ECombinator, TRule, TRuleGroup} from "@/client/features/MainForm/_types.ts";
-
-const fieldOptions = [
-	{
-		value: EFieldName.AMOUNT,
-		label: "Amount",
-	},
-	{
-		value: EFieldName.NAME,
-		label: "Name",
-	},
-	{
-		value: EFieldName.ID,
-		label: "Id",
-	},
-	{
-		value: EFieldName.TRANSACTION_STATE,
-		label: "Transaction State",
-	},
-	{
-		value: EFieldName.DEVICE_IP,
-		label: "Device IP",
-	},
-	{
-		value: EFieldName.INSTALLMENTS,
-		label: "Installments",
-	},
-];
-
-const operationOptions = [
-	{
-		value: EOperation.EQUAL,
-		label: "is",
-	},
-	{
-		value: EOperation.NOT_EQUAL,
-		label: "is not",
-	}
-];
+import { ECombinator, TRule, TRuleGroup } from "@/client/features/MainForm/_types.ts";
+import { CardFieldRule } from "../CardFieldRule/CardFieldRule";
 
 type TCardFieldGroupProps = {
 	group: TRuleGroup;
 	groupChange: (group: TRuleGroup)=> void
+	onDelete?: () => void
 }
 
 export function CardFieldGroup({
 	group,
-	groupChange
+	groupChange,
 }:TCardFieldGroupProps) {
 	const updateCombinator = (combinator: ECombinator) => {
 		groupChange({ ...group, combinator });
@@ -56,11 +20,11 @@ export function CardFieldGroup({
 	const addRule = () => {
 		const newRule: TRule = {
 			id: `rule-${Date.now()}-${Math.random()}`,
-			fieldName: "",
+			fieldName: EFieldName.NAME,
 			operation: EOperation.EQUAL,
 			value: ""
 		};
-		groupChange({...group, rules: [...group.rules, newRule]});
+		groupChange({ ...group, rules: [...group.rules, newRule] });
 	};
 
 	const addGroup = () => {
@@ -70,7 +34,7 @@ export function CardFieldGroup({
 			rules: [],
 			subGroups: []
 		};
-		groupChange({...group, subGroups: [...group.subGroups, newGroup]});
+		groupChange({ ...group, subGroups: [...group.subGroups, newGroup] });
 	};
 
 	const updateRule = (index: number, rule: TRule) => {
@@ -103,16 +67,17 @@ export function CardFieldGroup({
 				onAddGroupClick={addGroup}
 			/>
 
-			{/*{*/}
-			{/*	group.rules.map((rule, idx) => (*/}
-			{/*		<RuleComponent*/}
-			{/*			key={rule.id}*/}
-			{/*			rule={rule}*/}
-			{/*			onChange={(r) => updateRule(idx, r)}*/}
-			{/*			onDelete={() => deleteRule(idx)}*/}
-			{/*			error={errors[rule.id]}*/}
-			{/*		/>*/}
-			{/*	))}*/}
+			
+			{
+				group.rules.map((rule, idx) => (
+					<CardFieldRule
+						key={rule.id}
+						rule={rule}
+						onChange={(newRule) => updateRule(idx, newRule)}
+						onDelete={() => deleteRule(idx)}
+					/>
+				))
+			}
 
 			{
 				group.subGroups.map((subGroup, idx) => (
@@ -120,6 +85,7 @@ export function CardFieldGroup({
 						key={subGroup.id}
 						group={subGroup}
 						groupChange={(groupd: TRuleGroup) => updateSubGroup(idx, groupd)}
+						onDelete={() => deleteSubGroup(idx)}
 					/>
 				))}
 		</div>

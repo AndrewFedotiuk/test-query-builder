@@ -1,1 +1,1 @@
-export {CardFieldGroup} from "./CardFieldGroup";
+export { CardFieldGroup } from "./CardFieldGroup";

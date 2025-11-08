@@ -53,6 +53,7 @@ export default tseslint.config(
 					allowTemplateLiterals: true,
 				},
 			],
+			"object-curly-spacing": ["error", "always"],
 		},
 	}
 )

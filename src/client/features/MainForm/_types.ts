@@ -4,12 +4,12 @@ export enum ECombinator {
 }
 
 export enum EFieldName {
-	AMOUNT = "amount",
-	NAME = "name",
-	ID = "id",
-	TRANSACTION_STATE = "transaction_state",
-	DEVICE_IP = "device_ip",
-	INSTALLMENTS = "installments",
+	AMOUNT = "AMOUNT",
+	NAME = "NAME",
+	ID = "ID",
+	TRANSACTION_STATE = "TRANSACTION_STATE",
+	DEVICE_IP = "DEVICE_IP",
+	INSTALLMENTS = "INSTALLMENTS",
 }
 
 export enum EOperation {
@@ -31,18 +31,48 @@ export type TAmountValue = {
 	currency: ECurrency;
 }
 
-export type RuleValue = string | number | TAmountValue;
-
 export type TRule = {
 	id: string;
-	fieldName: EFieldName | "";
 	operation: EOperation;
-	value: RuleValue;
-}
+} & ({
+	fieldName: EFieldName.AMOUNT;
+	value: TAmountValue;
+} | {
+	fieldName: EFieldName.NAME;
+	value: string;
+} | {
+	fieldName: EFieldName.ID;
+	value: string;
+} | {
+	fieldName: EFieldName.TRANSACTION_STATE;
+	value: ETransactionState;
+} | {
+	fieldName: EFieldName.DEVICE_IP;
+	value: string;
+} | {
+	fieldName: EFieldName.INSTALLMENTS;
+	value: number;
+})
 
 export type TRuleGroup = {
 	id: string;
 	combinator: ECombinator;
 	rules: TRule[];
 	subGroups: TRuleGroup[];
+}
+
+export enum EFieldType {
+	TEXT = "text",
+	NUMBER = "number",
+	ENUM = "enum"
+}
+
+export enum ETransactionState {
+	SUCCEEDED = "SUCCEEDED",
+	REJECTED = "REJECTED",
+	ERROR = "ERROR",
+	TIMEOUT = "TIMEOUT",
+	CANCELLED = "CANCELLED",
+	FAILED = "FAILED",
+	ABORTED = "ABORTED"
 }
