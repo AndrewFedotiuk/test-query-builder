@@ -75,7 +75,7 @@ export function CardFieldGroup({
 				onAddGroupClick={addGroup}
 				onDeleteClick={onDelete}
 			/>
-			
+
 			{
 				group.rules.map((rule, idx) => (
 					<CardFieldRule
@@ -94,7 +94,7 @@ export function CardFieldGroup({
 					<CardFieldGroup
 						key={subGroup.id}
 						group={subGroup}
-						groupChange={(groupd: TRuleGroup) => updateSubGroup(idx, groupd)}
+						groupChange={(subGroup: TRuleGroup) => updateSubGroup(idx, subGroup)}
 						onDelete={() => deleteSubGroup(idx)}
 					/>
 				))}

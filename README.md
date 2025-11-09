@@ -15,3 +15,33 @@ Follow these steps to set up and run the project locally.
 
 1. npm install
 2. npm run start
+
+### Testing
+
+1. npm run test
+
+### Linting
+
+1. npm run lint
+
+# Thinks to improve
+Two areas for potential consideration: component memoization for performance optimization, and form libraries for enhanced validation. However, both are absolutely reasonable trade-offs for a test task, and the current solution works effectively within the given constraints.
+
+The task was completed according to the criteria:
+
+● Correctness and completeness of the functionality.
+
+● Code quality, organisation, and readability.
+
+● Semantically correct html.
+
+● UI styling.
+
+● Error handling and validation.
+
+● Testing coverage.
+
+
+
+
+

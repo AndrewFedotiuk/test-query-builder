@@ -4,6 +4,7 @@ import { ETransactionState, TAmountValue } from "@/client/features/MainForm/_typ
 import { ECurrency } from "@/client/features/MainForm/_types";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { GetFieldType } from "./_types";
+import { REG_EXP } from "@/client/_CONSTANTS.ts";
 
 type TValueInput<T> = {
 	fieldValue: EFieldName;
@@ -11,7 +12,7 @@ type TValueInput<T> = {
 	onChange: (value: T) => void;
 }
 
-function ValueInputField<T>({ 
+function ValueInputField<T>({
 	fieldValue,
 	value,
 	onChange
@@ -54,8 +55,8 @@ function ValueInputField<T>({
 
 		case EFieldName.TRANSACTION_STATE:
 			return (
-				<NativeSelect 
-					value={value as ETransactionState} 
+				<NativeSelect
+					value={value as ETransactionState}
 					onChange={(e) => onChange(e.target.value as T)}
 				>
 					{Object.values(ETransactionState).map((state) => (
@@ -68,14 +69,14 @@ function ValueInputField<T>({
 
 		case EFieldName.INSTALLMENTS:
 			return (
-				<Input 
+				<Input
 					value={value as number}
-					type="number" 
+					type="number"
 					min={1}
 					max={1_000_000}
 					aria-label={EFieldName.INSTALLMENTS}
 					name={EFieldName.INSTALLMENTS}
-					onChange={(e) => onChange(Number(e.target.value) as T)} 
+					onChange={(e) => onChange(Number(e.target.value) as T)}
 				/>
 			);
 
@@ -112,7 +113,7 @@ function ValueInputField<T>({
 					value={value as string}
 					required
 					type="text"
-					pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+					pattern={REG_EXP.IP}
 					name={EFieldName.DEVICE_IP}
 					placeholder="Device IP (192.168.1.1)"
 					onChange={(e) => onChange(e.target.value as T)}
@@ -124,7 +125,7 @@ function ValueInputField<T>({
 	}
 }
 
-export const ValueInput = <T extends EFieldName>({ 
+export const ValueInput = <T extends EFieldName>({
 	fieldName,
 	value,
 	onChange
