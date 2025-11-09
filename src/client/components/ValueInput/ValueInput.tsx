@@ -27,6 +27,8 @@ function ValueInputField<T>({
 						type="number"
 						max={1_000_000}
 						min={1}
+						name={EFieldName.AMOUNT}
+						aria-label={EFieldName.AMOUNT}
 						onChange={(e) => onChange({
 							...amountVal,
 							amount: Number(e.target.value)
@@ -71,6 +73,8 @@ function ValueInputField<T>({
 					type="number" 
 					min={1}
 					max={1_000_000}
+					aria-label={EFieldName.INSTALLMENTS}
+					name={EFieldName.INSTALLMENTS}
 					onChange={(e) => onChange(Number(e.target.value) as T)} 
 				/>
 			);
@@ -83,6 +87,7 @@ function ValueInputField<T>({
 					maxLength={1000}
 					required
 					type="text"
+					name={EFieldName.ID}
 					placeholder="ID"
 					onChange={(e) => onChange(e.target.value as T)}
 				/>
@@ -95,6 +100,8 @@ function ValueInputField<T>({
 					maxLength={100}
 					required
 					type="text"
+					name={EFieldName.NAME}
+					aria-label={EFieldName.NAME}
 					placeholder="Name"
 					onChange={(e) => onChange(e.target.value as T)}
 				/>
@@ -106,6 +113,7 @@ function ValueInputField<T>({
 					required
 					type="text"
 					pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+					name={EFieldName.DEVICE_IP}
 					placeholder="Device IP (192.168.1.1)"
 					onChange={(e) => onChange(e.target.value as T)}
 				/>

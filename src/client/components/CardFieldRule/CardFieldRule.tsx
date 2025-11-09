@@ -97,6 +97,7 @@ export function CardFieldRule({
 					onClick={onDelete}
 					variant="destructive"
 					size="icon"
+					aria-label="combinator-remove-rule"
 				>-</Button>
 			)}
 		</div>

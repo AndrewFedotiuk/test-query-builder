@@ -35,11 +35,17 @@ export function CardHeader({
 	return (
 		<header className="flex gap-3 justify-between flex-wrap">
 			<NativeSelect
+				name="combinator"
+				aria-label="combinator"
 				value={combinator}
 				onChange={(e) => onCombinatorChange(e.target.value as ECombinator)}
 			>
 				{combinatorOptions.map((option) => (
-					<NativeSelectOption label={option.label} key={option.value} value={option.value}>
+					<NativeSelectOption
+						key={option.value}
+						value={option.value}
+						label={option.label}
+					>
 						{option.label}
 					</NativeSelectOption>
 				))}
@@ -51,7 +57,7 @@ export function CardHeader({
 				{
 					onDeleteClick
 						? (
-							<Button onClick={onDeleteClick} type="button" variant="destructive" size="icon">-</Button>)
+							<Button onClick={onDeleteClick} aria-label="combinator-remove-group" type="button" variant="destructive" size="icon">-</Button>)
 						: null
 				}
 			</div>
