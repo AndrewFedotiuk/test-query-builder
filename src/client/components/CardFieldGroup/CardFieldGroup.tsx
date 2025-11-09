@@ -66,7 +66,6 @@ export function CardFieldGroup({
 				onAddRuleClick={addRule}
 				onAddGroupClick={addGroup}
 			/>
-
 			
 			{
 				group.rules.map((rule, idx) => (
@@ -74,7 +73,9 @@ export function CardFieldGroup({
 						key={rule.id}
 						rule={rule}
 						onChange={(newRule) => updateRule(idx, newRule)}
-						onDelete={() => deleteRule(idx)}
+						onDelete={group.rules.length === 1
+							? null
+							: () => deleteRule(idx)}
 					/>
 				))
 			}

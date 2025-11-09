@@ -39,7 +39,7 @@ export function CardHeader({
 				onChange={(e) => onCombinatorChange(e.target.value as ECombinator)}
 			>
 				{combinatorOptions.map((option) => (
-					<NativeSelectOption key={option.value} value={option.value}>
+					<NativeSelectOption label={option.label} key={option.value} value={option.value}>
 						{option.label}
 					</NativeSelectOption>
 				))}

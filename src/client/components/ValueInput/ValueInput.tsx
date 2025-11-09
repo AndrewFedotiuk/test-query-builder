@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { ETransactionState, TAmountValue } from "@/client/features/MainForm/_types";
 import { ECurrency } from "@/client/features/MainForm/_types";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
+import { GetFieldType } from "./_types";
 
 type TValueInput<T> = {
 	fieldValue: EFieldName;
@@ -10,7 +11,7 @@ type TValueInput<T> = {
 	onChange: (value: T) => void;
 }
 
-export function ValueInput<T>({ 
+function ValueInputField<T>({ 
 	fieldValue,
 	value,
 	onChange
@@ -24,6 +25,8 @@ export function ValueInput<T>({
 					<Input
 						value={amountVal.amount}
 						type="number"
+						max={1_000_000}
+						min={1}
 						onChange={(e) => onChange({
 							...amountVal,
 							amount: Number(e.target.value)
@@ -63,19 +66,46 @@ export function ValueInput<T>({
 		case EFieldName.INSTALLMENTS:
 			return (
 				<Input 
-					value={value as number} 
+					value={value as number}
 					type="number" 
+					min={1}
+					max={1_000_000}
 					onChange={(e) => onChange(Number(e.target.value) as T)} 
 				/>
 			);
 
 		case EFieldName.ID:
+			return (
+				<Input
+					value={value as string}
+					minLength={2}
+					maxLength={1000}
+					required
+					type="text"
+					placeholder="ID"
+					onChange={(e) => onChange(e.target.value as T)}
+				/>
+			);
 		case EFieldName.NAME:
+			return (
+				<Input
+					value={value as string}
+					minLength={2}
+					maxLength={100}
+					required
+					type="text"
+					placeholder="Name"
+					onChange={(e) => onChange(e.target.value as T)}
+				/>
+			);
 		case EFieldName.DEVICE_IP:
 			return (
 				<Input
 					value={value as string}
+					required
 					type="text"
+					pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+					placeholder="Device IP"
 					onChange={(e) => onChange(e.target.value as T)}
 				/>
 			);
@@ -84,3 +114,21 @@ export function ValueInput<T>({
 			return <Input type="text" disabled placeholder="Select a field first" />;
 	}
 }
+
+export const ValueInput = <T extends EFieldName>({ 
+	fieldName,
+	value,
+	onChange
+}: {
+	fieldName: T;
+	value: GetFieldType<T>;
+	onChange: (value: GetFieldType<T>) => void;
+}) => {
+	return (
+		<ValueInputField<GetFieldType<T>>
+			fieldValue={fieldName}
+			value={value}
+			onChange={onChange}
+		/>
+	);
+};

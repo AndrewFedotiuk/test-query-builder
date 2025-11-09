@@ -15,6 +15,8 @@ export enum EFieldName {
 export enum EOperation {
 	EQUAL = "EQUAL",
 	NOT_EQUAL = "NOT_EQUAL",
+	GREATER_THAN = "GREATER_THAN",
+	LESS_THAN = "LESS_THAN",
 }
 
 export enum ECurrency {
