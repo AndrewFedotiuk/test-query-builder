@@ -4,12 +4,12 @@ export enum ECombinator {
 }
 
 export enum EFieldName {
-	AMOUNT = "AMOUNT",
-	NAME = "NAME",
-	ID = "ID",
-	TRANSACTION_STATE = "TRANSACTION_STATE",
-	DEVICE_IP = "DEVICE_IP",
-	INSTALLMENTS = "INSTALLMENTS",
+	AMOUNT = "amount",
+	NAME = "name",
+	ID = "id",
+	TRANSACTION_STATE = "transaction_state",
+	DEVICE_IP = "device_ip",
+	INSTALLMENTS = "installments",
 }
 
 export enum EOperation {
@@ -77,4 +77,10 @@ export enum ETransactionState {
 	CANCELLED = "CANCELLED",
 	FAILED = "FAILED",
 	ABORTED = "ABORTED"
+}
+
+export type TSchema = {
+	combinator: ECombinator;
+	conditions?: Omit<TRule, "id">[];
+	subConditions?: TSchema[];
 }

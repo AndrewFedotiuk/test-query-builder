@@ -33,6 +33,7 @@ function ValueInputField<T>({
 						} as T)}
 					/>
 					<NativeSelect
+						className="min-w-24"
 						value={amountVal.currency}
 						onChange={(e) => onChange({
 							...amountVal,
@@ -105,7 +106,7 @@ function ValueInputField<T>({
 					required
 					type="text"
 					pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-					placeholder="Device IP"
+					placeholder="Device IP (192.168.1.1)"
 					onChange={(e) => onChange(e.target.value as T)}
 				/>
 			);

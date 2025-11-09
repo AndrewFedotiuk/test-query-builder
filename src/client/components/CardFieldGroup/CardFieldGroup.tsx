@@ -12,6 +12,7 @@ type TCardFieldGroupProps = {
 export function CardFieldGroup({
 	group,
 	groupChange,
+	onDelete
 }:TCardFieldGroupProps) {
 	const updateCombinator = (combinator: ECombinator) => {
 		groupChange({ ...group, combinator });
@@ -31,7 +32,14 @@ export function CardFieldGroup({
 		const newGroup: TRuleGroup = {
 			id: `group-${Date.now()}-${Math.random()}`,
 			combinator: ECombinator.AND,
-			rules: [],
+			rules: [
+				{
+					id: `rule-${Date.now()}-${Math.random()}`,
+					fieldName: EFieldName.NAME,
+					operation: EOperation.EQUAL,
+					value: ""
+				}
+			],
 			subGroups: []
 		};
 		groupChange({ ...group, subGroups: [...group.subGroups, newGroup] });
@@ -65,6 +73,7 @@ export function CardFieldGroup({
 				onCombinatorChange={updateCombinator}
 				onAddRuleClick={addRule}
 				onAddGroupClick={addGroup}
+				onDeleteClick={onDelete}
 			/>
 			
 			{

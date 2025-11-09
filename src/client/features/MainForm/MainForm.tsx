@@ -1,8 +1,10 @@
-// import axios from "axios";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { CardFieldGroup } from "@/client/components/CardFieldGroup";
-import { ECombinator, EFieldName, EOperation, TRuleGroup } from "@/client/features/MainForm/_types.ts";
+import { ECombinator, EFieldName, EOperation, TRuleGroup, TSchema } from "@/client/features/MainForm/_types.ts";
 import { useState } from "react";
+import { SchemaConverterManager } from "@/client/managers/SchemaManager";
+import { JSONOutput } from "@/client/components/JsonOutput/JsonOutput";
 
 export function MainForm() {
 	const [rootGroup, setRootGroup] = useState<TRuleGroup>({
@@ -19,15 +21,20 @@ export function MainForm() {
 		subGroups: []
 	});
 
+	const [schema, setSchema] = useState<TSchema>()
+		
+
 	const handleGroupChange = (group:TRuleGroup)=>{
 		setRootGroup(group);
 	}
 
-	const handleClick = async () => {
-
+	const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		try {
-			// await axios.post("/api/save-rules", {});
-			alert("Submitted");
+			const schema = SchemaConverterManager.groupToSchema(rootGroup);
+			await axios.post("/api/save-rules", schema);
+
+			setSchema(schema);
 		} catch {
 			alert("Error");
 		}
@@ -36,7 +43,7 @@ export function MainForm() {
 	return (
 		<form
 			className="flex w-full flex-col gap-3 px-3 py-6 rounded-md border group"
-			onSubmit={handleClick}
+			onSubmit={handleSubmit}
 		>
 			<CardFieldGroup group={rootGroup} groupChange ={handleGroupChange} />
 
@@ -46,15 +53,15 @@ export function MainForm() {
 				<Button className="group-invalid:opacity-50" type="submit" variant="positive">
 					Submit
 				</Button>
-
-				<Button
-					className="group-invalid:opacity-50"
-					type="button"
-					variant="outline"
-				>
-					Cancel
-				</Button>
 			</div>
+
+			<hr className="my-3" />
+
+			{
+				schema
+					? <JSONOutput data={schema} />
+					: null
+			}
 		</form>
 	)
 }
