@@ -27,19 +27,9 @@ Follow these steps to set up and run the project locally.
 # Thinks to improve
 Two areas for potential consideration: component memoization for performance optimization, and form libraries for enhanced validation. However, both are absolutely reasonable trade-offs for a test task, and the current solution works effectively within the given constraints.
 
-The task was completed according to the criteria:
+The task was completed according to given criteria.
 
-● Correctness and completeness of the functionality.
-
-● Code quality, organisation, and readability.
-
-● Semantically correct html.
-
-● UI styling.
-
-● Error handling and validation.
-
-● Testing coverage.
+I'm very open to discussing these ideas further and welcome different viewpoints. Every project has unique considerations, and I'm always interested in understanding the reasoning behind technical decisions.
 
 
 
